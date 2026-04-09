@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gradient Descent — Linear Regression</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="page-wrap">
+  <div class="topbar">
+    <div>
+      <h1>Gradient Descent <span>/</span> Linear Regression</h1>
+      <div class="subtitle">interactive optimization studio with live loss landscape</div>
+    </div>
+    <div class="chip">Model Lab / 3D View</div>
+  </div>
+
+<div class="layout">
+  <!-- Left: scatter + loss chart -->
+  <div class="left-stack">
+    <canvas id="scatter" height="300"></canvas>
+    <div class="panel">
+      <div class="panel-title">Loss history</div>
+      <canvas id="loss-chart" height="120"></canvas>
+    </div>
+  </div>
+
+  <!-- Right: 3D loss surface -->
+  <div class="right-stack panel scene-panel">
+    <div class="glow-wrap">
+      <canvas id="loss3d" height="430"></canvas>
+    </div>
+    <p class="hint">drag to orbit · scroll to zoom</p>
+  </div>
+</div>
+
+<!-- Stats -->
+<div class="lower">
+  <div class="stats">
+    <div class="stat"><div class="label">slope m</div><div class="val accent" id="sv">0.000</div></div>
+    <div class="stat"><div class="label">intercept b</div><div class="val accent" id="bv">0.000</div></div>
+    <div class="stat"><div class="label">MSE loss</div><div class="val" id="lv">—</div></div>
+    <div class="stat"><div class="label">epoch</div><div class="val green" id="iv">0</div></div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-title">Controls</div>
+    <div class="controls">
+      <div class="ctrl">
+        <label>learning rate <span id="lr-out">0.0100</span></label>
+        <input type="range" id="lr" min="-4" max="-0.5" step="0.05" value="-2">
+      </div>
+      <div class="ctrl">
+        <label>steps / epoch <span id="sp-out">10</span></label>
+        <input type="range" id="sp" min="1" max="100" step="1" value="10">
+      </div>
+      <div class="ctrl">
+        <label>noise <span id="ns-out">0.30</span></label>
+        <input type="range" id="ns" min="0.05" max="1.2" step="0.05" value="0.3">
+      </div>
+    </div>
+
+    <div class="btns">
+      <button class="run-btn" id="run-btn" aria-pressed="false">
+        <span class="btn-icon" aria-hidden="true">
+          <svg class="icon-play" viewBox="0 0 24 24"><path d="M8 5l11 7-11 7z" fill="currentColor" stroke="none"></path></svg>
+          <svg class="icon-pause is-hidden" viewBox="0 0 24 24"><path d="M9 5v14M15 5v14"></path></svg>
+        </span>
+        <span class="btn-label">run</span>
+      </button>
+      <button class="step-btn" id="step-btn">
+        <span class="btn-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M6 5l8 7-8 7z" fill="currentColor" stroke="none"></path><path d="M18 5v14"></path></svg>
+        </span>
+        <span class="btn-label">step epoch</span>
+      </button>
+      <button class="secondary-btn" id="reset-btn">
+        <span class="btn-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M20 11a8 8 0 1 1-2.3-5.7"></path><path d="M20 4v7h-7"></path></svg>
+        </span>
+        <span class="btn-label">reset params</span>
+      </button>
+      <button class="ghost-btn" id="regen-btn">
+        <span class="btn-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"></path></svg>
+        </span>
+        <span class="btn-label">new data</span>
+      </button>
+    </div>
+
+    <div class="epoch-log" id="epoch-log">
+      <div class="entry">— ready. press <span style="color:var(--accent2)">step epoch</span> or <span style="color:var(--accent)">run</span> —</div>
+    </div>
+  </div>
+</div>
+</div>
+
+<script src="script.js">
+</script>
+</body>
+</html>
